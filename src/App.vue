@@ -1,31 +1,41 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
+    <div id="nav" v-show="isshow">
+      <router-link to="/movie" tag="p" active-class="one">电影</router-link> |
+      <router-link to="/center" tag="p" active-class="one">影院</router-link>
+      <router-link to="/me" tag="p" active-class="one"> 我的</router-link>
+    </div>
+    
   </div>
 </template>
+<script>
+import {mapState} from 'vuex'
+export default {
+  computed:{
+    ...mapState(["isshow"])
+  }
+}
+</script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.one{
+  background: forestgreen;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+#app{
+  #nav{
+    width:100%;
+    height:50px;
+    display: flex;
+    background:#000;
+    position:fixed;
+    bottom:0;
+    p{
+      justify-content: center;
+      flex:1;
+      text-align: center;
+      line-height:50px;
+      color:#fff;
     }
   }
 }
