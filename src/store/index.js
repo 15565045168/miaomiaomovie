@@ -5,11 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isshow:true
+    isshow:true,
+    data:"北京"
   },
   mutations: {
     hello(state,data){
         state.isshow=data
+
+    },
+    huan(state,data){
+      state.data=data
     }
   },
   actions: {

@@ -2,7 +2,7 @@
     <div>
        <Header title="喵喵电影"/>
        <div class="title">
-       <p @click="city">{{citycontent}}</p>
+       <p @click="city">{{data}}</p>
        <router-link tag="p" to="/movie/jijiang" active-class="active">即将热映</router-link>
        <router-link tag="p" to="/movie/zhengzai" active-class="active">正在热映</router-link>
        <p>搜索</p>
@@ -14,11 +14,15 @@
 </template>
 <script>
 import Header from '../components/header'
+import { mapState } from 'vuex'
 export default {
     data(){
         return{
-      citycontent:"北京"
+      
         }
+    },
+    computed:{
+     ...mapState(["data"])
     },
     components:{
      Header
