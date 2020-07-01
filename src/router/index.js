@@ -16,12 +16,20 @@ const routes = [
     component: movie,
     children: [
       {
+        path: '/movie/city',
+        component: city
+      },
+      {
         path: '/movie/jijiang',
         component:jijiang
       },
       {
         path: '/movie/zhengzai',
         component:zhengzai
+      },
+      {
+       path:'/movie/search',
+       component:search
       },
       {
         path: '/movie',
@@ -37,14 +45,7 @@ const routes = [
     path: '/me',
     component: me
   },
-  {
-    path: '/city',
-    component: city
-  },
-  {
-    path: '/search',
-    component: search
-  },
+ 
   {
     path: '/',
     redirect: '/movie'

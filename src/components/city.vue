@@ -23,7 +23,7 @@
 <script>
 export default {
   created() {
-    this.$store.commit("hello", false);
+    //this.$store.commit("hello", false);
   },
   mounted() {
     this.axios.get("http://localhost:3000/city").then(res => {
@@ -31,7 +31,7 @@ export default {
     });
   },
   destroyed() {
-    this.$store.commit("hello", true);
+   // this.$store.commit("hello", true);
   },
   data() {
     return {
@@ -43,6 +43,7 @@ export default {
   methods: {
     fn(data) {
       this.$store.commit("huan", data);
+      this.$router.push(`/movie/jijiang`)
     },
     citylist(data) {
       var arr = [];
@@ -66,7 +67,7 @@ export default {
     },
     hand(index, item) {
       var top = this.$refs.one.getElementsByTagName("h3");
-      document.documentElement.scrollTop = top[index].offsetTop;
+      document.documentElement.scrollTop = top[index].offsetTop-50;
       this.isshow = true;
       this.hehe = item.title;
       setTimeout(() => {
@@ -103,15 +104,14 @@ export default {
   }
 }
 .fudong:nth-child(2) {
+ margin-top:8%;
   width: 10%;
-  height: 700px;
   position: fixed;
-  border: 1px solid #000;
   box-sizing: border-box;
   right: 0;
   li {
     list-style: none;
-    line-height: 30px;
+    line-height: 25px;
     text-align: center;
   }
 }
