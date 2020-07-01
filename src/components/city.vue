@@ -21,6 +21,7 @@
   </div>
 </template>
 <script>
+
 export default {
   created() {
     //this.$store.commit("hello", false);
@@ -78,9 +79,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.zuiwai {
-  width: 100%;
-}
 .fudong {
   float: left;
 }

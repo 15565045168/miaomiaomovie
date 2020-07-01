@@ -1,6 +1,7 @@
 <template>
-    <div>
-     <ul>
+    <div ref="haha" class="haha">
+     <ul >
+         <p>{{msg}}</p>
          <li v-for="(item,index) in list" :key="index">
           <div><img :src="item.cover" ></div>
           <div>
@@ -15,25 +16,63 @@
     </div>
 </template>
 <script>
+ import Better from 'better-scroll'
 export default {
     data(){
         return{
-            list:[]
+            list:[],
+            msg:''
         }
     },
     mounted(){
         this.axios.get("http://localhost:4000/subjects").then((res)=>{
-            this.list=res.data
-            console.log(res.data)
+            this.list=res.data,
+             this.$nextTick(() => { 
+          var top= new Better(this.$refs.haha,{
+          tap:true,
+          probeType:1
+        })
+        top.on("scroll",(pos)=>{
+           if(pos.y>30){
+         this.msg="正在更新中。。。。。。"
+           }
+        })
+        top.on("touchEnd",(pos)=>{
+           if(pos.y>30){
+            this.axios.get("http://localhost:4000/subjects").then((res)=>{
+             setTimeout(()=>{
+           this.list=res.data,
+            this.msg="更新成功",
+            setTimeout(()=>{
+                this.msg=""
+            },1000)
+               },3000)
+          
+            })
+            
+           
+           }
+        })
+
+          } 
+             )
+
+           
         })
     }
 }
 </script>
 <style lang="scss" scoped>
-ul{
+.haha{
+    position:relative;
     width:100%;
-    height:auto;
-    margin-top:60px;
+    height:80vh;
+    overflow:hidden;
+}
+ul{
+       width:100%;
+       height:auto;
+       margin-top:55px;
     li{
         width:90%;
         height:150px;
@@ -50,7 +89,7 @@ ul{
            }
        }
        div:nth-child(2){
-           width:200px;
+           width:150px;
            height:100%;
            padding-left:20px;
            h4{
