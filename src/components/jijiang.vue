@@ -1,5 +1,7 @@
 <template>
-    <div ref="haha" class="haha">
+    <div >
+        <loading v-if="isloading"></loading>
+        <Scroll v-else  :end="end" :top="top" >
      <ul >
          <p>{{msg}}</p>
          <li v-for="(item,index) in list" :key="index">
@@ -13,52 +15,88 @@
           </div>
          </li>
      </ul>
+     </Scroll>
     </div>
 </template>
 <script>
- import Better from 'better-scroll'
+import Scroll from './scroll'
+import { mapState } from 'vuex'
 export default {
+    components:{
+       Scroll    
+    },
+    computed:{
+     ...mapState(['isloading'])
+    },
     data(){
         return{
             list:[],
-            msg:''
+            msg:'',
+            node:0,
         }
     },
     mounted(){
-        this.axios.get("http://localhost:4000/subjects").then((res)=>{
+        setTimeout(()=>{
+
+         this.axios.get("http://localhost:4000/subjects").then((res)=>{
+             this.list=res.data
+             this.$store.commit("gailoading",false)
+        //      this.$nextTick(() => { 
+        // top.on("touchEnd",(pos)=>{
+        //    if(pos.y>30){
+        //     this.axios.get("http://localhost:4000/subjects").then((res)=>{
+        //      setTimeout(()=>{
+        //    this.list=res.data,
+        //     this.msg="更新成功",
+        //     setTimeout(()=>{
+        //         this.msg=""
+        //     },1000)
+        //        },3000)
+          
+        //     })
+            
+           
+        //    }
+        // })
+
+        //   } 
+        //      )
+        })},1000)
+    },
+    methods:{
+          end(pos){
+         if(pos.y>30){
+             var time=null
+             this.$store.commit("gailoading",true),
+             time=setInterval(()=>{
+               this.node++;
+               console.log(this.node)
+            if(this.node===1){
+                clearInterval(time),
+                this.node=0,
+           this.axios.get("http://localhost:4000/subjects").then((res)=>{
             this.list=res.data,
-             this.$nextTick(() => { 
-          var top= new Better(this.$refs.haha,{
-          tap:true,
-          probeType:1
-        })
-        top.on("scroll",(pos)=>{
-           if(pos.y>30){
-         this.msg="正在更新中。。。。。。"
-           }
-        })
-        top.on("touchEnd",(pos)=>{
-           if(pos.y>30){
-            this.axios.get("http://localhost:4000/subjects").then((res)=>{
-             setTimeout(()=>{
-           this.list=res.data,
             this.msg="更新成功",
             setTimeout(()=>{
                 this.msg=""
+            this.$store.commit("gailoading",false)
+                
             },1000)
-               },3000)
-          
-            })
-            
-           
+            }) 
+               }
+               },1000) 
+             
+         
+                  
            }
-        })
-
-          } 
-             )
-
-           
-        })
+        },
+        top(pos){
+         if(pos.y>30){
+         //this.$store.commit("gailoading",true)
+         this.msg="正在更新中。。。。。。"
+           }
+        }
+      
     }
 }
 </script>

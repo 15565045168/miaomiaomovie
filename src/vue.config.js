@@ -1,9 +1,12 @@
 module.exports={
     devServer:{
         proxy:{
-            "/api":{
-             target:'http://39.97.33.178', 
-             changeOrigin: true,　　　
+            "/json":{
+             target:'http://120.26.78.130/wubo', 
+             changeOrigin: true,
+             pathRewrite: {
+                '^/json': '/json'             //???
+              }
             }
         }
     }

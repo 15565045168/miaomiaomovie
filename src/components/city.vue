@@ -1,28 +1,40 @@
 <template>
   <div>
+    
     <div class="zuiwai" ref="two">
+      
       <div class="fudong" ref="one">
-        <ul v-for="(item,index) in list" :key="index" class="center" id="1">
+         <Better ref="haha">
+           <div class="box">
+        <div v-for="(item,index) in list" :key="index" class="center" id="1">
           <h3>{{item.title}}</h3>
           <p
             v-for="(subitem,index) in item.arr"
             :key="index"
-            @click="fn(subitem.name)"
+            @click="mm(subitem.name,index)"
+           
           >{{subitem.name}}</p>
-        </ul>
+        </div>
+        </div>
+         </Better >
       </div>
+      
       <div class="fudong" id="2">
-        <ul v-for="(item,index) in list" :key="item.arr.zip" @click="hand(index,item)">
+        <ul v-for="(item,index) in list" :key="item.arr.zip" @click="hand(index,item)" :class="dian==index?'active':''">
           <li>{{item.title}}</li>
         </ul>
         <div class="centerone" v-show="isshow">{{hehe}}</div>
       </div>
     </div>
+   
   </div>
 </template>
 <script>
-
+ import Better from './scroll'
 export default {
+  components:{
+      Better
+  },
   created() {
     //this.$store.commit("hello", false);
   },
@@ -38,12 +50,13 @@ export default {
     return {
       list: [],
       isshow: false,
-      hehe: ""
+      hehe: "",
+      dian:''
     };
   },
   methods: {
-    fn(data) {
-      this.$store.commit("huan", data);
+    mm(data) {
+      this.$store.commit("huan", data),
       this.$router.push(`/movie/jijiang`)
     },
     citylist(data) {
@@ -67,8 +80,9 @@ export default {
       }
     },
     hand(index, item) {
+      this.dian=index
       var top = this.$refs.one.getElementsByTagName("h3");
-      document.documentElement.scrollTop = top[index].offsetTop-50;
+      this.$refs.haha.ee(-top[index].offsetTop) 
       this.isshow = true;
       this.hehe = item.title;
       setTimeout(() => {
@@ -79,6 +93,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.active{
+  background:green;
+}
+.zuiwai{
+  width:100%;
+  height:90vh;
+}
 .fudong {
   float: left;
 }
@@ -86,7 +107,7 @@ export default {
   width: 90%;
   .center {
     width: 100%;
-    height: auto;
+    height:auto;
     h3 {
       width: 100%;
       line-height: 40px;
@@ -98,6 +119,7 @@ export default {
       background: darkgray;
       color: #fff;
       text-align: center;
+      z-index:9999;
     }
   }
 }

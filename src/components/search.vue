@@ -13,6 +13,7 @@
 export default {
     created(){
      this.axios.get("http://localhost:3000/city").then((res)=>{
+         console.log(res)
          this.list=res.data
          console.log(this.list)
      })
