@@ -12,7 +12,6 @@ export default new Vuex.Store({
   mutations: {
     hello(state,data){
      state.isshow=data
-
     },
     huan(state,data){
       state.data=data
