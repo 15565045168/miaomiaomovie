@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import movie from '../views/movie.vue'
 import center from '../views/center.vue'
 import me from '../views/me.vue'
+import mm from '../views/xiangqing.vue'
 import city from '../components/city.vue'
 import jijiang from '../components/jijiang.vue'
 import zhengzai from '../components/zhengzai.vue'
@@ -42,10 +43,14 @@ const routes = [
     component: center
   },
   {
+    path:'/mm/:move',
+    component: mm
+  },
+  {
     path: '/me',
     component: me
   },
- 
+  
   {
     path: '/',
     redirect: '/movie'

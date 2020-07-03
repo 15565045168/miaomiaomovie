@@ -11,7 +11,7 @@
               <p>观众评：<span>{{item.rate}}</span></p>
           </div>
           <div>
-              <p>购票</p>
+              <p @click="jinru(item.id)">购票</p>
           </div>
          </li>
      </ul>
@@ -36,10 +36,11 @@ export default {
         }
     },
     mounted(){
-        setTimeout(()=>{
+    
 
          this.axios.get("http://localhost:4000/subjects").then((res)=>{
              this.list=res.data
+             
              this.$store.commit("gailoading",false)
         //      this.$nextTick(() => { 
         // top.on("touchEnd",(pos)=>{
@@ -61,9 +62,14 @@ export default {
 
         //   } 
         //      )
-        })},1000)
+        })
     },
     methods:{
+        jinru(item){
+            this.$router.push(`/mm/${item}`)
+            // this.$router.push(`/detail/${id}`)
+   
+        },
           end(pos){
          if(pos.y>30){
              var time=null
@@ -76,11 +82,11 @@ export default {
                 this.node=0,
            this.axios.get("http://localhost:4000/subjects").then((res)=>{
             this.list=res.data,
+            console.log(this.list)
             this.msg="更新成功",
             setTimeout(()=>{
                 this.msg=""
-            this.$store.commit("gailoading",false)
-                
+            this.$store.commit("gailoading",false)   
             },1000)
             }) 
                }
